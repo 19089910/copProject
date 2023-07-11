@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+
 export const Container = styled.div`
   height: 100px;
   display: flex;
@@ -71,4 +72,19 @@ export const SidebarItemContainer = styled.div`
   &:hover {
     background-color: black;
   }
+`
+
+export const P = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 15px 20px;
+
+  > svg {
+    margin: 0 20px;
+  }
+
 `

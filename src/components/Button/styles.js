@@ -1,30 +1,51 @@
 import { styled } from 'styled-components'
 
 export const Button = styled.button`
-    width: 342px;
-    height: 68px;
-    margin-bottom: 10px;
-    background: ${props => props.isHome ? '#D93856' : 'rgba(255, 255, 255, 0.14)'};
-    cursor: pointer;
-    border-radius: 20px;
-    margin-top: 25px;
-    //letras internas
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700; 
-    font-size: 17px; 
-    line-height: 28px; 
-    text-decoration: none;
+  --color: #0077ff;
+  font-family: inherit;
+  display: inline-block;
+  width: 8em;
+  height: 2.6em;
+  line-height: 2.5em;
+  margin: 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--color);
+  transition: color .5s;
+  z-index: 1;
+  font-size: 17px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: var(--color);
+  cursor: pointer;
 
+  button:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--color);
+    height: 150px;
+    width: 200px;
+    border-radius: 50%;
+  }
 
-    color: #FFFFFF;
+  button:hover {
+    color: #fff;
+  }
 
-    &:hover{ 
-        opacity: 0.8; 
-    } 
-     
-    &:active{ 
-        opacity: 0.5; 
-    }
+  button:before {
+    top: 100%;
+    left: 100%;
+    transition: all .7s;
+  }
+
+  button:hover:before {
+    top: -30px;
+    left: -30px;
+  }
+
+  button:active:before {
+    background: #3a0ca3;
+    transition: background 0s;
+  }
 `

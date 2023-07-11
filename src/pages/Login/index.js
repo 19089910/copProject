@@ -1,5 +1,6 @@
 import HomeFenex from '../../assert/fenixRh.png'
 
+import {useNavigate } from 'react-router-dom'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -9,21 +10,22 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import api from '../../services/api'
 
 import { useUser } from '../../hooks/UserContext'
+
 import Conteiner from '../../components/Container'
 import Image from '../../components/Image'
 import H1 from '../../components/Title'
 import ContainerItens from '../../components/ContainerItens'
-import Button from '../../components/Button'
-
 import {
   InputLabel,
   Input,
-  P
+  P,
+  Button
 } from './styles'
 
 function Login () {
-  const {putUserData, userData} = useUser()
+  const navigate  = useNavigate()
 
+  const {putUserData, userData} = useUser()
 
   const schema = Yup.object().shape({
     code_register: Yup.string().required('Campo obrigatório'),
@@ -48,6 +50,10 @@ function Login () {
 
     putUserData(data)
     console.log(userData)
+
+    setTimeout(()=>{
+      navigate('/home/holerite')
+    },2000)
 
     }catch(err){
       toast.error('usuario ou senha incorretos', {
@@ -81,7 +87,7 @@ function Login () {
 
           {errors.password && <P>{errors.password.message}</P>}
 
-          <Button type='submit' isHome={true}>Entrar</Button>
+          <Button type='submit'>Entrar</Button>
         </form>
       </ContainerItens>
     </Conteiner>

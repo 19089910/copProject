@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import 'react-toastify/dist/ReactToastify.css'
+
 
 export default createGlobalStyle`
 *{
@@ -16,5 +16,8 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: #1a202c;
+  .body-custom {
+  background-color: #1a202c;
+}
 }
 `

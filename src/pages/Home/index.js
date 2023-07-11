@@ -16,8 +16,11 @@ import {
   Container,
   SidebarContainer,
   Content,
-  SidebarItemContainer
+  SidebarItemContainer,
+  P
 } from './styles'
+
+import { Link } from 'react-router-dom';
 
 function Home () {
   const [sidebar, setSidebar] = useState(false)
@@ -37,18 +40,29 @@ function Home () {
         <SidebarContainer sidebar={sidebar}>
           <FaTimes onClick={closeSidebar} />
           <Content>
+          <P>ADMINISTRAÇÃO</P>
+
+          <Link to="/home/holerite">
             <SidebarItemContainer>
               <FaHome />
-              Home
+                Holerite
             </SidebarItemContainer>
+          </Link>
+
+          <Link to="/home/funcionarios">
             <SidebarItemContainer>
-              <FaChartBar />
-              Statistics
+              <FaIdCardAlt />
+              Funcionarios
             </SidebarItemContainer>
+          </Link>
+
+          <Link to="/home/usuarios">
             <SidebarItemContainer>
               <FaUserAlt />
-              Users
+              Usuarios
             </SidebarItemContainer>
+          </Link>
+          <P>PERFIL</P>
             <SidebarItemContainer>
               <FaEnvelope />
               Mail
@@ -58,8 +72,8 @@ function Home () {
               Calendar
             </SidebarItemContainer>
             <SidebarItemContainer>
-              <FaIdCardAlt />
-              Employees
+              <FaChartBar />
+              Statistics
             </SidebarItemContainer>
             <SidebarItemContainer>
               <FaRegFileAlt />
@@ -69,6 +83,7 @@ function Home () {
               <FaRegSun />
               Settings
             </SidebarItemContainer>
+
           </Content>
         </SidebarContainer>
       )}

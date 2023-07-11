@@ -1,15 +1,14 @@
 import React from "react";
-import { Route  , Redirect } from 'react-router-dom';
+import { Outlet  , Navigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 
-function PrivateRoute({component, ...rest}){
+function PrivateRoute(){
     const user = localStorage.getItem('fenixrh:userData')
 
     if(!user){
-        return <Redirect to='/' />
+        return <Navigate to='/'/>
     }
-    return <Route {...rest} component={component} ></Route>
-    
+    return <Outlet />
 }
 
 export default PrivateRoute
