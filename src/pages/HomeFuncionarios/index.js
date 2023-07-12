@@ -1,86 +1,110 @@
-
-import Home from '../Home';
-
-import Button from '../../components/Button';
-import ConteinerMenu from '../../components/ContainerMenu';
-import {
-  Container,
-  Body, 
-  H1, 
-  H2,
-  DivPopUp,
-} from './styles';
-
-
-import api from '../../services/api';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
+import Home from '../Home';
+import Button from '../../components/Button';
+import ConteinerMenu from '../../components/ContainerMenu';
+import api from '../../services/api';
+import {
+  Body,
+  Container,
+  H1,
+  H2,
+  DivPopUp,
+  InputLabel,
+  Input,
+} from './styles';
 
-function HomeFuncionarios () {
-  const [TableHolerite, setTableHolerite] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [formValues, setFormValues] = useState({ name: '', password: '', admin: false });
+function HomeFuncionarios() {
+  const [tableEmployee, setTableEmployee] = useState([]); // Array de funcionários
+  const [showPopup, setShowPopup] = useState(false); // Estado para controlar a exibição do popup
 
-  useEffect(()=>{
-    async function loadTabels(){
-      const {data} = await api.get('/home/holerite')
-      setTableHolerite(data)
+  useEffect(() => {
+    // Função para carregar os funcionários da API
+    async function loadTables() {
+      const { data } = await api.get('/home/funcionarios');
+      setTableEmployee(data);
     }
-    loadTabels()
-  }, [])
+    loadTables();
+  }, []);
 
   function handleAddButtonClick() {
-    setShowPopup(true);
+    // Função para lidar com o clique no botão de adicionar
+    setShowPopup(true); // Exibe o popup
   }
 
   function handleExitButtonClick() {
-    setShowPopup(false);
+    // Função para lidar com o clique no botão de sair do popup
+    setShowPopup(false); // Esconde o popup
+  }
+
+  const schema = Yup.object().shape({
+    // Esquema de validação com Yup
+    name: Yup.string().required('Campo obrigatório'), // Nome é obrigatório
+    password: Yup.string().required('Campo obrigatório'), // Senha é obrigatória
+    admin: Yup.boolean().default(false), // Administração é um booleano com valor padrão falso
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema), // Resolver para o React Hook Form usando o Yup
+  });
+
+  const onSubmit = async (clientData) => {
+    // Função para lidar com o envio do formulário
+    const { data } = await api.post('newUsers', {
+      name: clientData.name,
+      password: clientData.password,
+      admin: clientData.admin,
+    });
+    console.log(data);
+  };
+
+  async function deleteClientOrder(clientOrderId) {
+    // Função para deletar um pedido de cliente
+    await api.delete(`/home/funcionarios/${clientOrderId}`);
   }
 
   return (
     <Body>
-      {showPopup&& (
+      {showPopup && (
         <DivPopUp className="popup">
-          <input
-            type="text"
-            placeholder="Name"
-            value={formValues.name}
-            onChange={(e) => setFormValues({ ...formValues, name: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={formValues.password}
-            onChange={(e) => setFormValues({ ...formValues, password: e.target.value })}
-          />
-          <label>
-            Admin:
-            <input
-              type="checkbox"
-              checked={formValues.admin}
-              onChange={(e) => setFormValues({ ...formValues, admin: e.target.checked })}
-            />
-          </label>
-          <button onClick={handleExitButtonClick}>Exit</button>
+          <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <InputLabel>Codigo de registro</InputLabel>
+            <Input type="name" {...register('name')} placeholder="" />
+
+            {errors.name && <p>{errors.name.message}</p>}
+
+            <InputLabel>Senha</InputLabel>
+            <Input type="password" {...register('password')} placeholder="" />
+
+            {errors.password && <p>{errors.password.message}</p>}
+            <label>
+              Admin:
+              <input type="checkbox" {...register('admin')} />
+            </label>
+
+            <button onClick={handleExitButtonClick}>Exit</button>
+            <Button type="submit">Cadrastrar</Button>
+          </form>
         </DivPopUp>
       )}
-      
+
       <div>
         <Home />
         <Container>
           <H1>Funcionários</H1> {/* Título */}
           <ConteinerMenu>
             <H2>Aqui você pode adicionar e remover Funcionários</H2>
-            <Button 
-            onClick={() => handleAddButtonClick()}
-            >+ Adicionar</Button>
+            <Button onClick={handleAddButtonClick}>+ Adicionar</Button> {/* Botão para adicionar funcionário */}
           </ConteinerMenu>
-
 
           <Table striped bordered hover variant="dark">
             <thead>
@@ -90,26 +114,26 @@ function HomeFuncionarios () {
                 <th>Ação</th>
               </tr>
             </thead>
-            <tbody>            
-            {
-              TableHolerite && TableHolerite.map( holerite => (
-              <tr key={holerite.id}>
-                <td>{holerite.User.name}</td>
-                <td>{holerite.User.code_register}</td>
-                <td>
-                  <Link to={holerite.url}>Visualizar</Link>
-                  <button>deletar</button>  
-                </td>
-              </tr>
-              ))
-            }
+            <tbody>
+              {/* Mapeia os funcionários para exibir na tabela */}
+              {tableEmployee &&
+                tableEmployee.map((employee) => (
+                  <tr key={employee.id}>
+                    <td>{employee.name}</td>
+                    <td>{employee.code_register}</td>
+                    <td>
+                      <button onClick={() => deleteClientOrder(employee.id)}>
+                        deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
-
         </Container>
       </div>
     </Body>
-  )
+  );
 }
 
-export default HomeFuncionarios
+export default HomeFuncionarios;

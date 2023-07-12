@@ -12,16 +12,22 @@ export const DivPopUp = styled.div`
   padding: 20px;
   z-index: 9999; /* Certifique-se de que o valor do z-index seja maior do que a <div> subjacente */
 `
+export const InputLabel = styled.p`
+    color: #EEEEEE;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+    margin-top: 20px;
 
-export const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
-  z-index: 9998;
+    margin-left: 25px;
+    border: #EEEEEE;
+
+`
+export const Input = styled.input`
+    width: 342px;
+    height: 58px;
+    background-color: #1a202c;
+    border-radius: 14px;
 `
 
 
