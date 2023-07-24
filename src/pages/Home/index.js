@@ -62,6 +62,14 @@ function Home () {
               Usuarios
             </SidebarItemContainer>
           </Link>
+
+          <Link to='/home/adimicao'>
+            <SidebarItemContainer>
+              <FaRegFileAlt />
+              Adimição
+            </SidebarItemContainer>
+          </Link>
+          
           <P>PERFIL</P>
             <SidebarItemContainer>
               <FaEnvelope />
@@ -75,10 +83,7 @@ function Home () {
               <FaChartBar />
               Statistics
             </SidebarItemContainer>
-            <SidebarItemContainer>
-              <FaRegFileAlt />
-              Reports
-            </SidebarItemContainer>
+
             <SidebarItemContainer>
               <FaRegSun />
               Settings

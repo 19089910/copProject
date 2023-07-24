@@ -8,13 +8,13 @@ import * as Yup from 'yup';
 import Home from '../Home';
 import Button from '../../components/Button';
 import ConteinerMenu from '../../components/ContainerMenu';
+import DivPopUp from '../../components/DivPopUp';
 import api from '../../services/api';
 import {
   Body,
   Container,
   H1,
   H2,
-  DivPopUp,
   InputLabel,
   Input,
 } from './styles';
@@ -22,6 +22,16 @@ import {
 function HomeFuncionarios() {
   const [tableEmployee, setTableEmployee] = useState([]); // Array de funcionários
   const [showPopup, setShowPopup] = useState(false); // Estado para controlar a exibição do popup
+  
+  function handleAddButtonClick() {
+    // Função para lidar com o clique no botão de adicionar
+    setShowPopup(true); // Exibe o popup
+  }
+
+  function handleExitButtonClick() {
+    // Função para lidar com o clique no botão de sair do popup
+    setShowPopup(false); // Esconde o popup
+  }
 
   useEffect(() => {
     // Função para carregar os funcionários da API
@@ -32,15 +42,6 @@ function HomeFuncionarios() {
     loadTables();
   }, []);
 
-  function handleAddButtonClick() {
-    // Função para lidar com o clique no botão de adicionar
-    setShowPopup(true); // Exibe o popup
-  }
-
-  function handleExitButtonClick() {
-    // Função para lidar com o clique no botão de sair do popup
-    setShowPopup(false); // Esconde o popup
-  }
 
   const schema = Yup.object().shape({
     // Esquema de validação com Yup
@@ -67,9 +68,9 @@ function HomeFuncionarios() {
     console.log(data);
   };
 
-  async function deleteClientOrder(clientOrderId) {
+  async function deleteButtonEmployee(employee) {
     // Função para deletar um pedido de cliente
-    await api.delete(`/home/funcionarios/${clientOrderId}`);
+    await api.delete(`/home/funcionarios/${employee}`);
   }
 
   return (
@@ -122,7 +123,7 @@ function HomeFuncionarios() {
                     <td>{employee.name}</td>
                     <td>{employee.code_register}</td>
                     <td>
-                      <button onClick={() => deleteClientOrder(employee.id)}>
+                      <button onClick={() => deleteButtonEmployee(employee.id)}>
                         deletar
                       </button>
                     </td>

@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-function HomeHolerite() {
+function HomeAdimicao() {
   const [tableHolerite, setTableHolerite] = useState([]);
   const [showPopup, setShowPopup] = useState(false); // Estado para controlar a exibição do popup
 
@@ -76,9 +76,9 @@ function HomeHolerite() {
       <div>
         <Home />
         <Container>
-          <H1>Holerites</H1> {/* Título */}
+          <H1>Admição</H1> {/* Título */}
           <ConteinerMenu>
-            <H2>Aqui você pode adicionar e remover holerites dos funcionários</H2>
+            <H2>Aqui você vai adicionar seus documentos</H2>
             <Button onClick={handleAddButtonClick}>+ Adicionar</Button> {/* Botão de adicionar holerite */}
           </ConteinerMenu>
 
@@ -113,4 +113,4 @@ function HomeHolerite() {
   );
 }
 
-export default HomeHolerite;
+export default HomeAdimicao;

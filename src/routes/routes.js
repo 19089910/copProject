@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import HomeHolerite from "../pages/HomeHolerite";
 import HomeFuncionarios from "../pages/HomeFuncionarios";
 import HomeUsuarios from "../pages/HomeUsuarios";
+import HomeAdimicao from "../pages/HomeAdimicao";
 
 
 function App(){
@@ -21,6 +22,7 @@ function App(){
               <Route element={<HomeHolerite/>} path='/home/holerite'/>
               <Route element={<HomeFuncionarios/>} path='/home/funcionarios'/>
               <Route element={<HomeUsuarios/>} path='/home/usuarios'/>
+              <Route element={<HomeAdimicao/>} path='/home/adimicao'/>
               <Route element={<Orders/>} path='/home/usuarios/o'/>
             </Route>
           </Routes>
